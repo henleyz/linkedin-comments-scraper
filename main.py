@@ -2,6 +2,7 @@ import csv
 import json
 import argparse
 from time import time
+import time as tim
 from datetime import datetime
 from urllib.parse import urljoin
 
@@ -65,12 +66,12 @@ post_url = check_post_url(Config["post_url"])
 ##### Writer csv
 writer = csv.writer(
     open(
-        Config["filename"] + unique_suffix + ".csv",
+        Config["filename"] +  ".csv",
         "w",
         encoding="utf-8",
     )
 )
-writer.writerow(["Name", "Headline", "Profile Picture", "Email", "Comment"])
+writer.writerow(["Names", "Profile Links", "Avatars", "Headlines", "Emails", "Comments"])
 
 linkedin_username, linkedin_password = login_details()
 
@@ -91,9 +92,11 @@ username.send_keys(linkedin_username)
 password = driver.find_element(By.NAME, Config["password_name"])
 password.send_keys(linkedin_password)
 
+
 sign_in_button = driver.find_element(By.XPATH, Config["sign_in_button_xpath"])
 sign_in_button.click()
 
+tim.sleep(20)
 driver.get(post_url)
 
 print("Loading comments :", end=" ", flush=True)
